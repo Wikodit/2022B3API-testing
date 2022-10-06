@@ -1,8 +1,5 @@
 import { faker } from '@faker-js/faker';
 import { INestApplication } from '@nestjs/common';
-import { ProjectUser } from '../../src/project-users/project-user.entitiy';
-import { ProjectUsersService } from '../../src/project-users/services/project-users.service';
-import { Project } from '../../src/projects/project.entity';
 import { BaseRouteTesting } from '../base-route';
 
 export class ProjectsTesting extends BaseRouteTesting {
@@ -46,7 +43,7 @@ export class ProjectsTesting extends BaseRouteTesting {
         // Get projects/
         describe('Get projects/ ', () => {
           const projects = []
-          let projectUser: ProjectUser;
+          let projectUser: Record<string, unknown>;
           beforeAll(async () => {
             createProjectDto = {
               name: faker.random.words(5),
@@ -102,7 +99,7 @@ export class ProjectsTesting extends BaseRouteTesting {
                   },
                 },
               },
-            }).returns('res.body') as unknown as Project[]
+            }).returns('res.body') as Record<string, unknown>[]
 
             expect(res.length).toBe(1)
             expect(res[0].id).toBe(projectUser.projectId)
@@ -142,7 +139,7 @@ export class ProjectsTesting extends BaseRouteTesting {
                   },
                 },
               },
-            }).returns('res.body') as unknown as Project[]
+            }).returns('res.body') as Record<string, unknown>[]
             expect(res.length).toBeGreaterThanOrEqual(4)
 
           })
@@ -180,14 +177,14 @@ export class ProjectsTesting extends BaseRouteTesting {
                   },
                 },
               },
-            }).returns('res.body') as unknown as Project[]
+            }).returns('res.body') as Record<string, unknown>[]
             expect(res.length).toBeGreaterThanOrEqual(4)
           })
         })
         
         // get projects/:id
         describe('Get projects/:id ', () => {
-          let project: Project;
+          let project: { id: string, [k: string]: unknown };
           beforeAll(async () => {
             createProjectDto = {
               name: faker.random.words(5),

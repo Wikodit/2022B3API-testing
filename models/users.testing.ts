@@ -1,7 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { BaseRouteTesting } from '../base-route';
 import {faker} from '@faker-js/faker'
-import { UserRole } from '../../src/users/user.entity';
 export class UsersTesting extends BaseRouteTesting {
   constructor(app: INestApplication) {
     super(app, 'users');
@@ -23,7 +22,7 @@ export class UsersTesting extends BaseRouteTesting {
                 email: faker.internet.email(),
                 username: faker.internet.userName(),
                 password: 'Qwertyuiop123!',
-                role: UserRole.ProjectManager
+                role: 'ProjectManager',
               })
               .expectStatus(201)
               .expectJsonSchema({
@@ -196,8 +195,8 @@ export class UsersTesting extends BaseRouteTesting {
             ).expectStatus(404);
           });
           this.itu('should return 200', async () => {
-            const id = await this.find().returns('[0].id');
-            return this.findById(id as unknown as string)
+            const id: string = await this.find().returns('[0].id');
+            return this.findById(id)
               .expectStatus(200)
               .expectJsonSchema({
                 type: 'object',
@@ -227,8 +226,8 @@ export class UsersTesting extends BaseRouteTesting {
             ).expectStatus(404);
           });
           this.itu('should return 200', async () => {
-            const id = await this.find().returns('[0].id');
-            return this.findById(id as unknown as string)
+            const id: string = await this.find().returns('[0].id');
+            return this.findById(id)
               .expectStatus(200)
               .expectJsonSchema({
                 type: 'object',

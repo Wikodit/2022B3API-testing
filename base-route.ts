@@ -1,6 +1,5 @@
 import { INestApplication } from '@nestjs/common';
 import * as pactum from 'pactum';
-import { User, UserRole } from '../src/users/user.entity';
 import { faker } from '@faker-js/faker';
 
 export class BaseRouteTesting {
@@ -11,7 +10,7 @@ export class BaseRouteTesting {
     email: string,
     password: string,
   };
-  adminUser: User;
+  adminUser: { id: string, [k: string]: unknown };;
   adminId!: string;
   user!: {
     email: string,
@@ -53,7 +52,7 @@ export class BaseRouteTesting {
     .withJson({
       ...this.admin,
       username: faker.internet.userName(),
-      role: UserRole.Admin,
+      role: 'Admin',
     }).expectStatus(201).returns('res.body')
     this.adminId = this.adminUser.id
     
@@ -87,14 +86,14 @@ export class BaseRouteTesting {
     .withJson({
       ...this.projectManager,
       username: faker.internet.userName(),
-      role: UserRole.ProjectManager,
+      role: 'ProjectManager',
     }).expectStatus(201).returns('id')
 
     this.projectManager2Id = await this.customPostPrivate('users/auth/sign-up')
     .withJson({
       ...this.projectManager2,
       username: faker.internet.userName(),
-      role: UserRole.ProjectManager,
+      role: 'ProjectManager',
     }).expectStatus(201).returns('id')
   }
 

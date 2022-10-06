@@ -1,10 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { INestApplication } from '@nestjs/common';
-import { Event, EventStatus, EventType } from '../../src/events/event.entity';
 import { BaseRouteTesting } from '../base-route';
 import * as dayjs from 'dayjs'
-import { Project } from '../../src/projects/project.entity';
-import { ProjectUser } from '../../src/project-users/project-user.entitiy';
 
 export class EventsTesting extends BaseRouteTesting {
   constructor(app: INestApplication) {
@@ -28,7 +25,7 @@ export class EventsTesting extends BaseRouteTesting {
             await this.create().withJson({
               date: dayjs().startOf('week').toDate(),
               eventDescription: faker.random.words(5),
-              eventType: EventType.RemoteWork
+              eventType: 'RemoteWork'
             }).expectStatus(201).expectJsonSchema({
               type: 'object',
               properties: {
@@ -48,7 +45,7 @@ export class EventsTesting extends BaseRouteTesting {
             await this.create().withJson({
               date: dayjs().startOf('week').toDate(),
               eventDescription: faker.random.words(5),
-              eventType: EventType.RemoteWork
+              eventType: 'RemoteWork'
             }).expectStatus(201).expectJsonSchema({
               type: 'object',
               properties: {
@@ -66,7 +63,7 @@ export class EventsTesting extends BaseRouteTesting {
             await this.create().withJson({
               date: dayjs().startOf('week').toDate(),
               eventDescription: faker.random.words(5),
-              eventType: EventType.RemoteWork
+              eventType: 'RemoteWork'
             }).expectStatus(401)
           })
 
@@ -74,7 +71,7 @@ export class EventsTesting extends BaseRouteTesting {
             await this.create().withJson({
               date: dayjs().startOf('week').toDate(),
               eventDescription: faker.random.words(5),
-              eventType: EventType.RemoteWork
+              eventType: 'RemoteWork'
             }).expectStatus(201).expectJsonSchema({
               type: 'object',
               properties: {
@@ -92,12 +89,12 @@ export class EventsTesting extends BaseRouteTesting {
             await this.create().withJson({
               date: dayjs().startOf('week').add(1, 'day').toDate(),
               eventDescription: faker.random.words(5),
-              eventType: EventType.RemoteWork
+              eventType: 'RemoteWork'
             }).expectStatus(201)
             await this.create().withJson({
               date: dayjs().startOf('week').add(2, 'day').toDate(),
               eventDescription: faker.random.words(5),
-              eventType: EventType.RemoteWork
+              eventType: 'RemoteWork'
             }).expectStatus(401)
           })
 
@@ -105,7 +102,7 @@ export class EventsTesting extends BaseRouteTesting {
             await this.create().withJson({
               date: dayjs().startOf('week').toDate(),
               eventDescription: faker.random.words(5),
-              eventType: EventType.PaidLeave
+              eventType: 'PaidLeave'
             }).expectStatus(201).expectJsonSchema({
               type: 'object',
               properties: {
@@ -119,14 +116,14 @@ export class EventsTesting extends BaseRouteTesting {
                   type: 'string'
                 },
               }
-            }).expectBodyContains(EventStatus.Pending)
+            }).expectBodyContains('Pending')
           })
 
           this.itu('should return 401 because of 2 event the same day', async () =>{
             await this.create().withJson({
               date: dayjs().startOf('week').toDate(),
               eventDescription: faker.random.words(5),
-              eventType: EventType.PaidLeave
+              eventType: 'PaidLeave'
             }).expectStatus(201).expectJsonSchema({
               type: 'object',
               properties: {
@@ -144,7 +141,7 @@ export class EventsTesting extends BaseRouteTesting {
             await this.create().withJson({
               date: dayjs().startOf('week').toDate(),
               eventDescription: faker.random.words(5),
-              eventType: EventType.PaidLeave
+              eventType: 'PaidLeave'
             }).expectStatus(401)
           })
         })
@@ -158,7 +155,7 @@ export class EventsTesting extends BaseRouteTesting {
           await this.create().withJson({
             date: dayjs().startOf('week').toDate(),
             eventDescription: faker.random.words(5),
-            eventType: EventType.PaidLeave
+            eventType: 'PaidLeave'
           }).expectStatus(201)
         })
 
@@ -168,14 +165,14 @@ export class EventsTesting extends BaseRouteTesting {
       });
 
       describe('Get events/id', () => {
-        let event: Event;
+        let event: { id: string, [k: string]: unknown };
         beforeEach(async () => {
           await this.createAllUsers()
           await this.setAdminAccessToken()
           event = await this.create().withJson({
             date: dayjs().startOf('week').toDate(),
             eventDescription: faker.random.words(5),
-            eventType: EventType.PaidLeave
+            eventType: 'PaidLeave'
           }).expectStatus(201).returns('res.body')
         })
         this.itu('should return 200', async () => {
@@ -203,9 +200,9 @@ export class EventsTesting extends BaseRouteTesting {
       });
 
       describe('Get events/id/validate', () => {
-        let event: Event;
-        let project: Project;
-        let projectUser: ProjectUser;
+        let event: { id: string, [k: string]: unknown };
+        let project: Record<string, unknown>;
+        let projectUser: Record<string, unknown>;
         beforeEach(async () => {
           await this.createAllUsers()
           await this.setAdminAccessToken();
@@ -225,7 +222,7 @@ export class EventsTesting extends BaseRouteTesting {
           event = await this.create().withJson({
             date: dayjs().startOf('week').toDate(),
             eventDescription: faker.random.words(5),
-            eventType: EventType.PaidLeave
+            eventType: 'PaidLeave'
           }).expectStatus(201).returns('res.body')
 
         })
@@ -252,9 +249,9 @@ export class EventsTesting extends BaseRouteTesting {
       });
 
       describe('Get events/id/decline', () => {
-        let event: Event;
-        let project: Project;
-        let projectUser: ProjectUser;
+        let event: { id: string, [k: string]: unknown };
+        let project: Record<string, unknown>;
+        let projectUser: Record<string, unknown>;
         beforeEach(async () => {
           await this.createAllUsers()
           await this.setAdminAccessToken();
@@ -274,7 +271,7 @@ export class EventsTesting extends BaseRouteTesting {
           event = await this.create().withJson({
             date: dayjs().startOf('week').toDate(),
             eventDescription: faker.random.words(5),
-            eventType: EventType.PaidLeave
+            eventType: 'PaidLeave'
           }).expectStatus(201).returns('res.body')
 
         })

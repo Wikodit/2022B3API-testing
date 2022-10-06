@@ -1,8 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { INestApplication } from '@nestjs/common';
 import * as dayjs from 'dayjs';
-import { ProjectUser } from '../../src/project-users/project-user.entitiy';
-import { Project } from '../../src/projects/project.entity';
 import { BaseRouteTesting } from '../base-route';
 
 export class ProjectUsersTesting extends BaseRouteTesting {
@@ -21,7 +19,7 @@ export class ProjectUsersTesting extends BaseRouteTesting {
         }
       });
       describe('project-users', () => {
-        let project: Project;
+        let project: Record<string, unknown>;
         beforeEach(async () => {
           await this.setAdminAccessToken();
           await this.createUser()
@@ -105,7 +103,7 @@ export class ProjectUsersTesting extends BaseRouteTesting {
           this.ita('should return 409 ConflictException if user already on a project on the same date range', async () =>{
             const date = faker.date.past()
             const endDate = dayjs(date).add(1, 'month').toDate()
-            const project2 = await this.customPostwithPath('projects/').withJson(createProjectDto).expectStatus(201).returns('res.body') as unknown as Project;
+            const project2 = await this.customPostwithPath('projects/').withJson(createProjectDto).expectStatus(201).returns('res.body') as Record<string, unknown>;
             await this.create().withJson({
               projectId: project.id,
               userId: this.userId,
@@ -122,7 +120,7 @@ export class ProjectUsersTesting extends BaseRouteTesting {
           this.ita('should return 409 ConflictException if user already on a project on the same date range 2 ', async () =>{
             const date = faker.date.past()
             const endDate = dayjs(date).add(1, 'month').toDate()
-            const project2 = await this.customPostwithPath('projects/').withJson(createProjectDto).expectStatus(201).returns('res.body') as unknown as Project;
+            const project2 = await this.customPostwithPath('projects/').withJson(createProjectDto).expectStatus(201).returns('res.body') as Record<string, unknown>;
             await this.create().withJson({
               projectId: project.id,
               userId: this.userId,
@@ -139,7 +137,7 @@ export class ProjectUsersTesting extends BaseRouteTesting {
           this.ita('should return 409 ConflictException if user already on a project on the same date range 3', async () =>{
             const date = faker.date.past()
             const endDate = dayjs(date).add(1, 'month').toDate()
-            const project2 = await this.customPostwithPath('projects/').withJson(createProjectDto).expectStatus(201).returns('res.body') as unknown as Project;
+            const project2 = await this.customPostwithPath('projects/').withJson(createProjectDto).expectStatus(201).returns('res.body') as Record<string, unknown>;
             await this.create().withJson({
               projectId: project.id,
               userId: this.userId,
@@ -156,7 +154,7 @@ export class ProjectUsersTesting extends BaseRouteTesting {
           this.ita('should return 409 ConflictException if user already on a project on the same date range 4', async () =>{
             const date = faker.date.past()
             const endDate = dayjs(date).add(1, 'month').toDate()
-            const project2 = await this.customPostwithPath('projects/').withJson(createProjectDto).expectStatus(201).returns('res.body') as unknown as Project;
+            const project2 = await this.customPostwithPath('projects/').withJson(createProjectDto).expectStatus(201).returns('res.body') as Record<string, unknown>;
             await this.create().withJson({
               projectId: project.id,
               userId: this.userId,
@@ -173,7 +171,7 @@ export class ProjectUsersTesting extends BaseRouteTesting {
           this.ita('should return 409 ConflictException if user already on a project on the same date range 5', async () =>{
             const date = faker.date.past()
             const endDate = dayjs(date).add(1, 'month').toDate()
-            const project2 = await this.customPostwithPath('projects/').withJson(createProjectDto).expectStatus(201).returns('res.body') as unknown as Project;
+            const project2 = await this.customPostwithPath('projects/').withJson(createProjectDto).expectStatus(201).returns('res.body') as Record<string, unknown>;
             await this.create().withJson({
               projectId: project.id,
               userId: this.userId,
@@ -191,7 +189,7 @@ export class ProjectUsersTesting extends BaseRouteTesting {
 
         // Get project-users/id
         describe('Get project-users/:id ', () => {
-          let projectUser: ProjectUser;
+          let projectUser: { id: string, [k: string]: unknown };
           beforeEach(async () => {
             const date = faker.date.past()
             projectUser = await this.customPostwithPath('project-users').withJson({
@@ -256,7 +254,7 @@ export class ProjectUsersTesting extends BaseRouteTesting {
         
         // get project-users
         describe('Get project-users ', () => {
-          let projectUser: ProjectUser;
+          let projectUser: Record<string, unknown>;
           beforeEach(async () => {
             const date = faker.date.past()
             await this.createProjectManagers()
@@ -274,7 +272,7 @@ export class ProjectUsersTesting extends BaseRouteTesting {
             await this.find().expectStatus(200)
           })
           this.itu('should return 200 for user but with no project-users', async () =>{
-            const body = await this.find().expectStatus(200).returns('res.body') as unknown as ProjectUser[];
+            const body = await this.find().expectStatus(200).returns('res.body') as Record<string, unknown>[];
             expect(body.length).toBe(0);
           })
           this.itu('should return 200 for user but with only his project-users', async () =>{
