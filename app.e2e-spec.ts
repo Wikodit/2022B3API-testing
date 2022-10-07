@@ -1,11 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from './../src/app.module';
 import * as pactum from 'pactum';
-import { UsersTesting } from './models/users.testing';
 import { NestFactory } from '@nestjs/core';
-import { ProjectsTesting } from './models/projects.testing';
-import { ProjectUsersTesting } from './models/project-users.testing';
-import { EventsTesting } from './models/event.testing';
 
 import { DayOneTesting } from './days/day1.testing';
 import { DayTwoPartOneTesting } from './days/day2-part1.testing';
