@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import { BaseRouteTesting } from '../base-route';
 import * as dayjs from 'dayjs'
 
-export class DaySixPartOneTesting extends BaseRouteTesting {
+export class DaySixPartTwoTesting extends BaseRouteTesting {
   constructor(app: INestApplication) {
     super(app, 'events');
   }

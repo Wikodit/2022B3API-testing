@@ -10,6 +10,7 @@ import { DayThreeTesting } from './days/day3.testing';
 import { DayFourTesting } from './days/day4.testing';
 import { DayFiveTesting } from './days/day5.testing';
 import { DaySixPartOneTesting } from './days/day6-part1.testing';
+import { DaySixPartTwoTesting } from './days/day6-part2.testing';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -34,4 +35,5 @@ describe('AppController (e2e)', () => {
   new DayFourTesting(app).routeTest()
   new DayFiveTesting(app).routeTest()
   new DaySixPartOneTesting(app).routeTest()
+  new DaySixPartTwoTesting(app).routeTest()
 });
