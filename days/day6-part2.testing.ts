@@ -5,7 +5,7 @@ import * as dayjs from 'dayjs'
 
 export class DaySixPartTwoTesting extends BaseRouteTesting {
   constructor(app: INestApplication) {
-    super(app, 'events');
+    super(app, 'users');
   }
 
   // @TODO CHIFFREMENT PASSWORD
@@ -14,6 +14,7 @@ export class DaySixPartTwoTesting extends BaseRouteTesting {
     describe('route', () => {
       describe('get /users/:id/meal-vouchers/:month', () => {
         beforeAll( async () => {
+          await this.createAllUsers()
           await this.setAdminAccessToken();
 
           const createProjectDto = {
